@@ -1,6 +1,6 @@
 # website
 
-The whole of www.matt-jones.org. Every page is a plain HTML file in this repo, served by
+The whole of matt-jones.org (www.matt-jones.org redirects to it). Every page is a plain HTML file in this repo, served by
 GitHub Pages. To change the site, edit a file and push to `main`. It's live a minute later.
 
 | URL                | File                         | Source artifact                                      |
@@ -24,5 +24,5 @@ and the Software/Baseball menu items go to each project's own page.
 Deploys run from `.github/workflows/pages.yml` on every push to `main`
 (Settings → Pages → Source: **GitHub Actions**).
 
-Other files: `CNAME` (tells GitHub Pages the domain), `.nojekyll` (serve files as-is),
+Other files: `CNAME` (records the custom domain; the live setting is in Settings → Pages), `.nojekyll` (serve files as-is),
 `favicon.svg`. DNS and email setup is in `dns/records.md`.
