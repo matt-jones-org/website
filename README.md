@@ -21,5 +21,8 @@ GitHub Pages. To change the site, edit a file and push to `main`. It's live a mi
 All pages share the home page's navigation. Links between pages are root-relative (`/about/`),
 and the Software/Baseball menu items go to each project's own page.
 
+Deploys run from `.github/workflows/pages.yml` on every push to `main`
+(Settings → Pages → Source: **GitHub Actions**).
+
 Other files: `CNAME` (tells GitHub Pages the domain), `.nojekyll` (serve files as-is),
 `favicon.svg`. DNS and email setup is in `dns/records.md`.
