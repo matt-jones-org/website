@@ -315,22 +315,24 @@
   <!-- FOLLOW THE SUN (HiBob) -->
   <style>
 #fts{
-  --bg:#F4EEDC; --paper:#FBF7EC; --ink:#1B2A22; --muted:#5E6B62; --line:#D9D0B8;
-  --board:#1F3B2D; --board-2:#183024; --board-line:#2E5140; --board-ink:#EDE6D0; --board-muted:#8FA597;
-  --amber:#F2A900; --amber-soft:rgba(242,169,0,.18); --green-on:#7FD49B;
-  --land-night:#C9C0A6; --land-day:#1F3B2D; --sea-night:#E9E1CA;
+  --bg:#F6F1E7; --paper:#FFFDFB; --ink:#2D0A1F; --muted:#6E5763; --line:#EADFD6;
+  --board:#3B0D2A; --board-2:#2F0A21; --board-line:#5B2447; --board-ink:#FFF4F1; --board-muted:#D9AFC2;
+  --amber:#E8295B; --amber-soft:rgba(232,41,91,.12); --green-on:#8EE0B0;
+  --land-night:#E6D9CE; --land-day:#3B0D2A; --sea-night:#FBF7EF;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) #fts{
-    --bg:#101A15; --paper:#15221B; --ink:#EDE6D0; --muted:#9AAA9F; --line:#2A3B31;
-    --board:#0C1611; --board-2:#0A120E; --board-line:#22382C;
-    --land-night:#2B3A31; --land-day:#F2A900; --sea-night:#121E18;
+    --bg:#1A0811; --paper:#251019; --ink:#FBEDEF; --muted:#C9A9B8; --line:#43202F;
+    --board:#14060D; --board-2:#10050B; --board-line:#3A1828; --board-muted:#B58DA0;
+    --amber:#FF4D7A; --amber-soft:rgba(255,77,122,.16);
+    --land-night:#43202F; --land-day:#FF4D7A; --sea-night:#1D0A14;
   }
 }
 :root[data-theme="dark"] #fts{
-  --bg:#101A15; --paper:#15221B; --ink:#EDE6D0; --muted:#9AAA9F; --line:#2A3B31;
-  --board:#0C1611; --board-2:#0A120E; --board-line:#22382C;
-  --land-night:#2B3A31; --land-day:#F2A900; --sea-night:#121E18;
+  --bg:#1A0811; --paper:#251019; --ink:#FBEDEF; --muted:#C9A9B8; --line:#43202F;
+  --board:#14060D; --board-2:#10050B; --board-line:#3A1828; --board-muted:#B58DA0;
+  --amber:#FF4D7A; --amber-soft:rgba(255,77,122,.16);
+  --land-night:#43202F; --land-day:#FF4D7A; --sea-night:#1D0A14;
 }
 #fts, #fts *{box-sizing:border-box}
 #fts{background:var(--bg);color:var(--ink);font-family:"Archivo Narrow",system-ui,sans-serif;font-size:17px;line-height:1.45;-webkit-font-smoothing:antialiased}
@@ -368,12 +370,12 @@
 #fts .btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 #fts button,#fts .date{font:600 14px "IBM Plex Mono",monospace;letter-spacing:.04em;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer}
 #fts button.primary{background:var(--ink);color:var(--bg)}
-#fts button.amber{background:var(--amber);color:#1B2A22;border-color:var(--amber)}
+#fts button.amber{background:var(--amber);color:#fff;border-color:var(--amber)}
 #fts .ticket{position:sticky;top:76px}
 #fts .caption{display:none;gap:12px;align-items:flex-start;padding:12px 20px;border-top:1px solid var(--line);background:var(--amber-soft)}
 #fts .caption.show{display:flex}
 #fts .caption b{font-family:Graduate,serif;font-weight:400}
-#fts .caption .cn{font-family:"IBM Plex Mono",monospace;font-size:12px;background:var(--amber);color:#1B2A22;border-radius:4px;padding:2px 7px;white-space:nowrap;margin-top:2px}
+#fts .caption .cn{font-family:"IBM Plex Mono",monospace;font-size:12px;background:var(--amber);color:#fff;border-radius:4px;padding:2px 7px;white-space:nowrap;margin-top:2px}
 #fts button:hover{border-color:var(--amber)}
 #fts .date{border-radius:8px;padding:7px 10px;color-scheme:light dark}
 @media (max-width:720px){#fts .controls{grid-template-columns:1fr}#fts .clock{font-size:26px}}
@@ -394,7 +396,7 @@
 #fts .status small{display:block;color:var(--board-muted);margin-top:4px;font-size:11px}
 #fts .track{position:relative;height:26px;background:var(--board-2);border-radius:4px;overflow:hidden}
 #fts .seg{position:absolute;top:4px;bottom:4px;background:var(--board-line);border-radius:3px}
-#fts .seg.home{background:#4C7A62}
+#fts .seg.home{background:#B23A6E}
 #fts .ov{position:absolute;top:0;bottom:0;background:var(--amber-soft);border-left:2px solid var(--amber);border-right:2px solid var(--amber)}
 #fts .cursor{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--amber);box-shadow:0 0 8px var(--amber)}
 #fts .ticks{position:relative;height:16px;font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--board-muted)}
@@ -478,7 +480,7 @@
 
   <section>
     <h2>The board</h2>
-    <p class="sub">Each bar is a pod's 9-to-6 workday, plotted on New York's clock. Amber is live overlap with NYC.</p>
+    <p class="sub">Each bar is a pod's 9-to-6 workday, plotted on New York's clock. Pink is live overlap with NYC.</p>
     <div class="board" id="board"></div>
   </section>
 
