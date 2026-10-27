@@ -17,6 +17,7 @@ GitHub Pages. To change the site, edit a file and push to `main`. It's live a mi
 | `/black-ink/`      | `black-ink/index.html`       | https://claude.ai/artifact/KLV6u3oNPKcVYjJmamTFfM     |
 | `/scouting-report/`| `scouting-report/index.html` | https://claude.ai/artifact/3Fr6gd1HEpu54tweJqJvbH     |
 | `/calendar/`       | `calendar/index.html`        | https://claude.ai/artifact/JsQ4mVArGFjEv2Nu2maNrx     |
+| `/hibob/`          | `hibob/index.html`           | Built in the repo (Follow the Sun, HiBob styling)     |
 
 All pages share the home page's navigation. Links between pages are root-relative (`/about/`),
 and the Software/Baseball menu items go to each project's own page.

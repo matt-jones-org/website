@@ -1,0 +1,695 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#F6F1E7;color:#2D0A1F}img{max-width:100%}</style><title>Hi, Bob | Matt Jones</title>
+<meta name="description" content="Matt Jones for HiBob Customer Experience: Follow the Sun, an interactive map of five CX pods sharing one queue.">
+<link rel="icon" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></head><body>
+
+<style>
+  :root {
+    --cream:   #F6F1E7;
+    --card:    #FFFDFB;
+    --ink:     #2D0A1F;
+    --muted:   #6E5763;
+    --line:    #EADFD6;
+    --cerise:  #E8295B;
+    --plum:    #3B0D2A;
+    --blush:   #FBE1E7;
+    --peach:   #FFD9C2;
+    --on-plum: #FFF4F1;
+    --shadow:  0 1px 0 rgba(45,10,31,.04), 0 18px 40px -26px rgba(45,10,31,.45);
+    --maxw: 1180px;
+    --f-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --f-display: var(--f-sans);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --cream: #1A0811; --card: #251019; --ink: #FBEDEF; --muted: #C9A9B8; --line: #43202F;
+      --cerise: #FF4D7A; --plum: #14060D; --blush: #3A1424; --peach: #3D1F1A; --on-plum: #FFF4F1;
+      --shadow: 0 1px 0 rgba(0,0,0,.3), 0 18px 40px -22px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --cream: #1A0811; --card: #251019; --ink: #FBEDEF; --muted: #C9A9B8; --line: #43202F;
+    --cerise: #FF4D7A; --plum: #14060D; --blush: #3A1424; --peach: #3D1F1A; --on-plum: #FFF4F1;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 18px 40px -22px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--f-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid var(--cerise);
+    outline-offset: 3px;
+    border-radius: 999px;
+  }
+
+  /* ---- Top bar ---- */
+  header.bar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--cream) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+  .wordmark { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; letter-spacing: -.02em; text-decoration: none; }
+  .wordmark .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--cerise); box-shadow: 8px -6px 0 -3px var(--peach); }
+  nav.top { display: flex; align-items: center; gap: 4px; }
+  nav.top a { text-decoration: none; font-weight: 600; font-size: 15px; padding: 8px 12px; border-radius: 999px; transition: background .2s; }
+  nav.top a:hover { background: var(--blush); }
+  nav.top .menu { position: relative; display: flex; align-items: center; }
+  nav.top .menu > a .caret { font-size: .8em; color: var(--cerise); }
+  nav.top .menu-list {
+    display: none; position: absolute; top: 100%; left: 0; min-width: 190px; flex-direction: column;
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 8px; box-shadow: var(--shadow);
+  }
+  nav.top .menu:hover .menu-list, nav.top .menu:focus-within .menu-list { display: flex; }
+  nav.top a.pill { background: var(--cerise); color: #fff; margin-left: 6px; padding: 10px 18px; }
+  nav.top a.pill:hover { background: color-mix(in srgb, var(--cerise) 86%, #000); }
+  @media (max-width: 980px) { nav.top .hide-md { display: none; } }
+  @media (max-width: 620px) { nav.top a:not(.pill), nav.top .menu { display: none; } }
+
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    font: 700 16px var(--f-sans); padding: 14px 24px; border-radius: 999px; border: 2px solid var(--ink);
+    transition: transform .2s, background .2s, color .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.primary { background: var(--cerise); border-color: var(--cerise); color: #fff; }
+  .btn.primary:hover { background: color-mix(in srgb, var(--cerise) 86%, #000); }
+  .btn.ghost:hover { background: var(--ink); color: var(--cream); }
+
+  /* ---- Hero ---- */
+  .hero { position: relative; padding: 72px 0 40px; isolation: isolate; overflow: clip; }
+  .hero::before, .hero::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; filter: blur(2px); }
+  .hero::before { width: 520px; height: 520px; right: -140px; top: -120px; background: var(--blush); border-radius: 46% 54% 42% 58% / 52% 44% 56% 48%; }
+  .hero::after { width: 240px; height: 240px; right: 260px; top: 300px; background: var(--peach); border-radius: 58% 42% 50% 50% / 45% 55% 45% 55%; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+  .kicker { display: inline-block; font-weight: 700; font-size: 14px; color: var(--cerise); background: var(--card); border: 1px solid var(--line); padding: 6px 14px; border-radius: 999px; }
+  .hero h1 { font-size: clamp(48px, 8vw, 96px); font-weight: 800; line-height: .98; letter-spacing: -.04em; margin: 20px 0 18px; }
+  .hero h1 em { font-style: normal; color: var(--cerise); }
+  .hero .lede { font-size: 20px; color: var(--muted); max-width: 560px; margin: 0 0 28px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .hello { background: var(--plum); color: var(--on-plum); border-radius: 32px; padding: 28px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+  .hello::after { content: ""; position: absolute; width: 180px; height: 180px; right: -60px; bottom: -60px; border-radius: 50%; background: var(--cerise); opacity: .9; }
+  .hello .k { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+  .hello ul { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 14px; position: relative; z-index: 1; }
+  .hello li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start; }
+  .hello .n { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.1); display: grid; place-items: center; font-weight: 800; }
+  .hello b { display: block; font-size: 17px; }
+  .hello span { font-size: 15px; opacity: .75; }
+  @media (max-width: 860px) {
+    .hero { padding-top: 48px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero::before { width: 340px; height: 340px; right: -160px; }
+    .hero::after { display: none; }
+  }
+
+  /* ---- More ---- */
+  .more { padding: 24px 0 80px; }
+  .more h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -.03em; margin: 0 0 8px; }
+  .more .sub { color: var(--muted); margin: 0 0 24px; font-size: 18px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .tile { display: block; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; box-shadow: var(--shadow); transition: transform .2s, border-color .2s; }
+  .tile:hover { transform: translateY(-3px); border-color: var(--cerise); }
+  .tile .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--blush); color: var(--cerise); }
+  .tile h3 { font-size: 22px; letter-spacing: -.02em; margin: 14px 0 6px; }
+  .tile p { color: var(--muted); margin: 0 0 14px; }
+  .tile .go { font-weight: 700; color: var(--cerise); }
+
+  /* ---- Footer ---- */
+  footer { background: var(--plum); color: var(--on-plum); border-radius: 40px 40px 0 0; padding: 56px 0 32px; }
+  .foot-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: end; }
+  .foot-name { font-size: clamp(32px, 5vw, 56px); font-weight: 800; letter-spacing: -.035em; line-height: 1.05; }
+  .foot-name em { font-style: normal; color: var(--cerise); }
+  .foot-links { display: grid; gap: 10px; justify-items: start; }
+  .foot-links a { text-decoration: none; font-weight: 600; opacity: .85; }
+  .foot-links a:hover { opacity: 1; text-decoration: underline; }
+  .copyright { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.15); font-size: 14px; opacity: .65; }
+  @media (max-width: 720px) { .foot-grid { grid-template-columns: 1fr; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn, .tile { transition: none; }
+    .btn:hover, .tile:hover { transform: none; }
+  }
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="wordmark" href="/"><span class="dot" aria-hidden="true"></span> Matt Jones</a>
+    <nav class="top" aria-label="Primary">
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/portfolio/">Portfolio</a>
+      <div class="menu hide-md">
+        <a href="/portfolio/#software" aria-haspopup="true">Software <span class="caret" aria-hidden="true">▾</span></a>
+        <div class="menu-list">
+          <a href="/llmadness/">LLMAdness</a>
+          <a href="/cry-wolf/">Cry Wolf</a>
+          <a href="/the-bullzen/">The Bullzen</a>
+          <a href="/windhover/">Windhover</a>
+        </div>
+      </div>
+      <div class="menu hide-md">
+        <a href="/portfolio/#baseball" aria-haspopup="true">Baseball <span class="caret" aria-hidden="true">▾</span></a>
+        <div class="menu-list">
+          <a href="/magic-number/">Magic Number</a>
+          <a href="/black-ink/">Black Ink</a>
+          <a href="/scouting-report/">Scouting Report</a>
+        </div>
+      </div>
+      <a href="/box-score/">Box Score</a>
+      <a class="pill" href="/calendar/">Book a time</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker">For the HiBob Customer Experience team</span>
+        <h1>Hi, Bob.<br>I'm <em>Matt.</em></h1>
+        <p class="lede">I built this for HiBob CX: a live look at how five pods can share one queue and pass a customer around the world without dropping them.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#fts">Follow the Sun <span aria-hidden="true">↓</span></a>
+          <a class="btn ghost" href="/calendar/">Book a time</a>
+          <a class="btn ghost" href="mailto:mscottjones24@gmail.com">Email</a>
+        </div>
+      </div>
+      <aside class="hello" aria-label="What's on this page">
+        <div class="k">On this page</div>
+        <ul>
+          <li><span class="n">1</span><div><b>The pods, live</b><span>A world map that lights up whoever's on shift.</span></div></li>
+          <li><span class="n">2</span><div><b>The board</b><span>Every pod's workday on New York's clock.</span></div></li>
+          <li><span class="n">3</span><div><b>Handoff windows</b><span>Where the overlap opens and closes.</span></div></li>
+          <li><span class="n">4</span><div><b>One ticket, five pods</b><span>A sample P1 relayed around the world.</span></div></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <style>
+#fts{
+  --bg:transparent; --paper:#FFFDFB; --ink:#2D0A1F; --muted:#6E5763; --line:#EADFD6;
+  --board:#3B0D2A; --board-2:#2F0A21; --board-line:#5B2447; --board-ink:#FFF4F1; --board-muted:#D9AFC2;
+  --amber:#E8295B; --amber-soft:rgba(232,41,91,.12); --green-on:#8EE0B0;
+  --land-night:#E6D9CE; --land-day:#3B0D2A; --sea-night:#FBF7EF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) #fts{
+    --paper:#251019; --ink:#FBEDEF; --muted:#C9A9B8; --line:#43202F;
+    --board:#14060D; --board-2:#10050B; --board-line:#3A1828; --board-muted:#B58DA0;
+    --amber:#FF4D7A; --amber-soft:rgba(255,77,122,.16);
+    --land-night:#43202F; --land-day:#FF4D7A; --sea-night:#1D0A14;
+  }
+}
+:root[data-theme="dark"] #fts{
+  --paper:#251019; --ink:#FBEDEF; --muted:#C9A9B8; --line:#43202F;
+  --board:#14060D; --board-2:#10050B; --board-line:#3A1828; --board-muted:#B58DA0;
+  --amber:#FF4D7A; --amber-soft:rgba(255,77,122,.16);
+  --land-night:#43202F; --land-day:#FF4D7A; --sea-night:#1D0A14;
+}
+#fts, #fts *{box-sizing:border-box}
+#fts{background:var(--bg);color:var(--ink);font-family:var(--f-sans);font-size:17px;line-height:1.45;-webkit-font-smoothing:antialiased}
+#fts section{padding:0}
+#fts .wrap{max-width:1180px;margin:0 auto;padding:24px 16px 72px}
+#fts .eyebrow{display:block;margin:0;font-family:var(--f-sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+#fts .eyebrow::after{content:none}
+#fts .fts-title{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,7vw,72px);line-height:1;margin:10px 0 12px;letter-spacing:.01em}
+#fts .fts-title .sun{color:var(--amber)}
+#fts .lede{max-width:680px;color:var(--muted);font-size:19px;margin:0}
+#fts h2{font-family:var(--f-display);font-weight:700;font-size:24px;margin:0 0 4px}
+#fts .sub{color:var(--muted);margin:0 0 16px}
+#fts .card{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:var(--shadow)}
+#fts section{margin-top:28px}
+
+/* map */
+#fts .mapcard{padding:0;overflow:hidden}
+#fts .maphead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding:16px 20px 0;flex-wrap:wrap}
+#fts svg.map{display:block;width:100%;height:auto;background:var(--sea-night)}
+#fts .dot-n{fill:var(--land-night)}
+#fts .dot-d{fill:var(--land-day)}
+#fts .pin-label{font-family:var(--f-sans);font-size:19px;font-weight:600;fill:var(--ink);paint-order:stroke;stroke:var(--sea-night);stroke-width:6px;stroke-linejoin:round}
+#fts .pin-time{font-family:var(--f-sans);font-size:16px;fill:var(--muted);paint-order:stroke;stroke:var(--sea-night);stroke-width:6px}
+#fts .pulse{transform-box:fill-box;transform-origin:center;animation:fts-pulse 1.8s ease-out infinite}
+@keyframes fts-pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(3);opacity:0}}
+@media (prefers-reduced-motion:reduce){#fts .pulse{animation:none;opacity:.35}}
+#fts .legend{display:flex;gap:16px;font-size:14px;color:var(--muted);flex-wrap:wrap}
+#fts .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+
+/* controls */
+#fts .controls{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 20px 20px;border-top:1px solid var(--line)}
+#fts .clock{font-family:var(--f-sans);font-weight:600;font-size:30px;line-height:1;white-space:nowrap}
+#fts .clock small{display:block;font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.12em;margin-top:6px}
+#fts input[type=range]{width:100%;accent-color:var(--amber);height:28px}
+#fts .btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+#fts button,#fts .date{font:600 14px var(--f-sans);letter-spacing:.04em;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer}
+#fts button.primary{background:var(--ink);color:var(--paper)}
+#fts button.amber{background:var(--amber);color:#fff;border-color:var(--amber)}
+#fts .ticket{position:sticky;top:88px}
+#fts .caption{display:none;gap:12px;align-items:flex-start;padding:12px 20px;border-top:1px solid var(--line);background:var(--amber-soft)}
+#fts .caption.show{display:flex}
+#fts .caption b{font-family:var(--f-display);font-weight:700}
+#fts .caption .cn{font-family:var(--f-sans);font-size:12px;background:var(--amber);color:#fff;border-radius:4px;padding:2px 7px;white-space:nowrap;margin-top:2px}
+#fts button:hover{border-color:var(--amber)}
+#fts .date{border-radius:8px;padding:7px 10px;color-scheme:light dark}
+@media (max-width:720px){#fts .controls{grid-template-columns:1fr}#fts .clock{font-size:26px}}
+
+/* scoreboard */
+#fts .board{background:var(--board);color:var(--board-ink);border-radius:24px;padding:8px 0;border:1px solid var(--board-line)}
+#fts .row{display:grid;grid-template-columns:150px 120px 150px 1fr;gap:14px;align-items:center;padding:12px 20px;border-bottom:1px solid var(--board-line)}
+#fts .row:last-child{border-bottom:0}
+#fts .row.head{font-family:var(--f-sans);font-size:11px;letter-spacing:.14em;color:var(--board-muted);padding-top:8px;padding-bottom:8px}
+#fts .pod{font-family:var(--f-display);font-size:18px;line-height:1.1}
+#fts .pod small{display:block;font-family:var(--f-sans);font-size:11px;color:var(--board-muted);letter-spacing:.08em;margin-top:3px}
+#fts .ltime{font-family:var(--f-sans);font-size:20px;color:var(--amber)}
+#fts .ltime small{display:block;font-size:11px;color:var(--board-muted)}
+#fts .status{font-family:var(--f-sans);font-size:12px;letter-spacing:.06em}
+#fts .pill{display:inline-block;padding:3px 8px;border-radius:4px;border:1px solid var(--board-line);color:var(--board-muted)}
+#fts .pill.on{background:var(--green-on);color:#0C1611;border-color:var(--green-on);font-weight:600}
+#fts .pill.wk{border-style:dashed}
+#fts .status small{display:block;color:var(--board-muted);margin-top:4px;font-size:11px}
+#fts .track{position:relative;height:26px;background:var(--board-2);border-radius:4px;overflow:hidden}
+#fts .seg{position:absolute;top:4px;bottom:4px;background:var(--board-line);border-radius:3px}
+#fts .seg.home{background:#B23A6E}
+#fts .ov{position:absolute;top:0;bottom:0;background:var(--amber-soft);border-left:2px solid var(--amber);border-right:2px solid var(--amber)}
+#fts .cursor{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--amber);box-shadow:0 0 8px var(--amber)}
+#fts .ticks{position:relative;height:16px;font-family:var(--f-sans);font-size:10px;color:var(--board-muted)}
+#fts .ticks span{position:absolute;transform:translateX(-50%)}
+#fts .ticks span:first-child{transform:none}
+#fts .ticks span:last-child{transform:translateX(-100%)}
+@media (max-width:820px){
+  #fts .row{grid-template-columns:1fr 1fr 1fr}
+  #fts .row .trackcell{grid-column:1/-1}
+  #fts .row.head{display:none}
+}
+
+/* stats */
+#fts .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+#fts .stat{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:14px 16px}
+#fts .stat .k{font-family:var(--f-sans);font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+#fts .stat .v{font-family:var(--f-display);font-size:34px;line-height:1.1;margin-top:6px}
+#fts .stat .v small{font-family:var(--f-sans);font-size:16px;color:var(--muted);margin-left:4px}
+#fts .stat .d{font-size:14px;color:var(--muted);margin-top:2px}
+#fts .stat.hl{border-color:var(--amber);box-shadow:inset 4px 0 0 var(--amber)}
+#fts .notes{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+#fts .notes li{padding:10px 14px;border-left:3px solid var(--amber);background:var(--paper);border-radius:0 10px 10px 0}
+
+/* relay */
+#fts .relay{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:20px}
+@media (max-width:820px){#fts .relay{grid-template-columns:1fr}#fts .ticket{position:static}}
+#fts .ticket{background:var(--board);color:var(--board-ink);border-radius:24px;padding:18px 20px;border:1px solid var(--board-line);align-self:start}
+#fts .ticket .tid{font-family:var(--f-sans);font-size:12px;color:var(--amber);letter-spacing:.1em}
+#fts .ticket h3{font-family:var(--f-display);font-weight:700;font-size:20px;margin:8px 0}
+#fts .ticket p{color:var(--board-muted);margin:0 0 12px;font-size:15px}
+#fts .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+#fts .tags span{font-family:var(--f-sans);font-size:11px;border:1px solid var(--board-line);padding:2px 8px;border-radius:4px}
+#fts .tags span.p1{border-color:var(--amber);color:var(--amber)}
+#fts .steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+#fts .step{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:18px;background:var(--paper);cursor:pointer;transition:border-color .2s, opacity .2s}
+#fts .step:hover{border-color:var(--amber)}
+#fts .step.past{opacity:.6}
+#fts .step.active{border-color:var(--amber);box-shadow:inset 4px 0 0 var(--amber);opacity:1}
+#fts .step .w{font-family:var(--f-sans);font-size:12px;line-height:1.35}
+#fts .step .w b{display:block;font-family:var(--f-display);font-weight:700;font-size:15px}
+#fts .step .w span{color:var(--muted)}
+#fts .step h4{margin:0 0 2px;font-size:17px}
+#fts .step p{margin:0;font-size:15px;color:var(--muted)}
+#fts .step .handoff{margin-top:6px;font-family:var(--f-sans);font-size:12px;color:var(--ink);background:var(--amber-soft);padding:6px 8px;border-radius:6px}
+#fts .fts-foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+#fts .fts-foot a{color:inherit}
+  #fts .clock,#fts .ltime,#fts .ticks,#fts .tid,#fts .step .w{font-variant-numeric:tabular-nums}
+#fts .fts-title{letter-spacing:-.02em}
+#fts .eyebrow{font-weight:700;color:var(--amber)}
+  </style>
+
+<div id="fts">
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Built for HiBob Customer Experience · by Matt Jones</div>
+    <h2 class="fts-title">Follow the <span class="sun">Sun</span></h2>
+    <p class="lede">Five pods, one queue. Drag the clock to see who's online, where the handoff windows open and close, and how one escalation can travel around the world without getting dropped.</p>
+  </header>
+
+  <section class="card mapcard" aria-label="World map of pods">
+    <div class="maphead">
+      <div>
+        <h2>The pods, live</h2>
+        <p class="sub" style="margin:0">Lit dots are daylight. Pulsing pins are on shift.</p>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--green-on)"></i>On shift</span>
+        <span><i style="background:var(--land-night);border:1px solid var(--muted)"></i>Off shift</span>
+        <span><i style="background:var(--amber)"></i>Ticket path</span>
+      </div>
+    </div>
+    <svg class="map" id="map" viewBox="0 20 1440 500" role="img" aria-label="Dot-matrix world map with HiBob pod cities"></svg>
+    <div class="controls">
+      <div class="clock" id="clock">--:--<small>NEW YORK · ET</small></div>
+      <input type="range" id="slider" min="0" max="1440" step="15" aria-label="Time of day in New York">
+      <div class="btns">
+        <input type="date" class="date" id="date" aria-label="Date">
+        <button id="play" class="primary">Play</button>
+        <button id="now">Now</button>
+      </div>
+    </div>
+    <div class="caption" id="caption" aria-live="polite"></div>
+  </section>
+
+  <section>
+    <h2>The board</h2>
+    <p class="sub">Each bar is a pod's 9-to-6 workday, plotted on New York's clock. Pink is live overlap with NYC.</p>
+    <div class="board" id="board"></div>
+  </section>
+
+  <section>
+    <h2>Handoff windows</h2>
+    <p class="sub" id="daylabel">Live overlap with the New York pod.</p>
+    <div class="stats" id="stats"></div>
+    <ul class="notes" id="notes"></ul>
+  </section>
+
+  <section>
+    <h2>One ticket, five pods</h2>
+    <p class="sub">An illustrative SSO escalation for a global Premium customer. Hit play, or click any step to jump the clock.</p>
+    <div class="relay">
+      <div class="ticket">
+        <div class="tid">TICKET #48213 · PREMIUM</div>
+        <h3>"Nobody in APAC can log in through Okta since this morning."</h3>
+        <p>Global customer, 1,400 employees across four countries. SSO is the only way in.</p>
+        <div class="tags"><span class="p1">P1</span><span>SSO / SAML</span><span>Okta</span><span>Premium</span></div>
+        <button class="amber" id="runRelay">Run the relay</button>
+      </div>
+      <ol class="steps" id="steps"></ol>
+    </div>
+  </section>
+
+  <div class="fts-foot">
+    <span>Pod cities from HiBob's public announcements. Hours assume 9:00–6:00 local, Mon–Fri (Sun–Thu in Israel), with daylight saving handled per date. The ticket is a made-up example.</span>
+    <span>Matt Jones · <a href="/">matt-jones.org</a></span>
+  </div>
+</div>
+</div>
+
+<script>
+(function () {
+const LAND = {"step":2.5,"lat0":72.5,"rows":["000000000000000000000011011101011010111100000000001111111111111000000000000000000000000000000100000010001111111111111111111100001100000000000000","000000011111111000000000011111110010001101111000001111111111111000000000000000001111000000000000000110111111111111111111111111111111111100001000","110000111111111111111111111101111111111001011100000111111110000000000000000000111111111100011111111110111111111111111111111111111111111111111111","001001111111111111111111111111111111101001111000000111110000000111000000000011110011110011111111111111111111111111111111111111111111111111111111","000000111111111111111111111111111110001000001000000011100000000000000000001111101111111111111111111111111111111111111111111111111111111110111111","000001111111100111111111111111111100000001110000000000000000000000000000001111100100111111111111111111111111111111111111111111111111110001100000","000000000110000000011111111111111110000001111110000000000000000000000010000001100011111111111111111111111111111111111111111111110000000110000000","000000100000000000001111111111111111111001111111100000000000000000000010000100001111111111111111111111111111111111111111111111000000001110000000","000000000000000000000111111111111111111001111111110000000000000000001011101111111111111111111111111111111111111111111111111111111000001000000000","000000000000000000000111111111111111111111111000010000000000000000000000111111111111111111111111111111111111111111111111111111110100000000000000","000000000000000000000011111111111111111111111100001000000000000000000001111111111111111111111111111111111111111111111111111111110000000000000000","000000000000000000000011111111111111111111111010000000000000000000000001111110111111010111100111111111111111111111111111111111100000000000000000","000000000000000000000011111111111111111111110000000000000000000000001111100111011110000001100111111111111111111111111111111100001000000000000000","000000000000000000000011111111111111111111000000000000000000000000001111000100101101111111110111111111111111111111111111011000001000000000000000","000000000000000000000001111111111111111110000000000000000000000000001111000001000001111111110011111111111111111111111111100100010000000000000000","000000000000000000000000111111111111111111000000000000000000000000000111111100000000011111111111111111111111111111111111000001110000000000000000","000000000000000000000000011111111111111100000000000000000000000000001111111111001000001111111111111111111111111111111111000010000000000000000000","000000000000000000000000000111111111001000000000000000000000000000001111111111111111111111101111111111111111111111111111100000000000000000000000","000000000000000000000000001011111000000100000000000000000000000000011111111111111111101111110111111111111111111111111111000000000000000000000000","000000000000000000000000000101111000000000000000000000000000000000111111111111111111110111111010000111111111111111111111100000000000000000000000","000000000000000000000000000000111000001100000000000000000000000001111111111111111111111011111111000011111111011111111100000000000000000000000000","000000000000000000000000000000111000100001000000000000000000000001111111111111111111111011111110000001111100011111000000000000000000000000000000","000000000000000000000000000000011111100000000000000000000000000000111111111111111111111001111100000001111000001111100000100000000000000000000000","000000000000000000000000000000000001111000000000000000000000000001111111111111111111111101110000000000110000000111110000100000000000000000000000","000000000000000000000000000000000000011000000000000000000000000001111111111111111111111110000000000000110000000101110000100000000000000000000000","000000000000000000000000000000000000001000101110000000000000000000111111111111111111111111110000000000110000000100100001000000000000000000000000","000000000000000000000000000000000000000001111111100000000000000000011111111111111111111111110000000000001000000000000000001000000000000000000000","000000000000000000000000000000000000000001111111111000000000000000001101001111111111111111100000000000000000001010000011000000000000000000000000","000000000000000000000000000000000000000001111111111100000000000000000000000011111111111111000000000000000000000101000110000000000000000000000000","000000000000000000000000000000000000000011111111111100000000000000000000000011111111111110000000000000000000000011001110000000000000000000000000","000000000000000000000000000000000000000011111111111111100000000000000000000011111111111100000000000000000000000011001110100001110000000000000000","000000000000000000000000000000000000000111111111111111111000000000000000000001111111111100000000000000000000000000000000000000011100000000000000","000000000000000000000000000000000000000011111111111111111100000000000000000001111111111100000000000000000000000000011000000000011110000000000000","000000000000000000000000000000000000000001111111111111111100000000000000000001111111111100000000000000000000000000000000010000000001000000000000","000000000000000000000000000000000000000001111111111111111000000000000000000001111111111100000000000000000000000000000000000011100000000000000000","000000000000000000000000000000000000000000111111111111110000000000000000000001111111111100010000000000000000000000000000001111000100000000000000","000000000000000000000000000000000000000000011111111111110000000000000000000001111111111000110000000000000000000000000000011111111100000000000000","000000000000000000000000000000000000000000001111111111110000000000000000000001111111110000100000000000000000000000000000111111111110000000000000","000000000000000000000000000000000000000000001111111111100000000000000000000000111111110001100000000000000000000000000111111111111111000000000000","000000000000000000000000000000000000000000001111111110000000000000000000000000111111110000100000000000000000000000000111111111111111100000000000","000000000000000000000000000000000000000000001111111110000000000000000000000000111111100000000000000000000000000000000011111111111111100000000000","000000000000000000000000000000000000000000011111111100000000000000000000000000011111000000000000000000000000000000000011111111111111100000000000","000000000000000000000000000000000000000000011111111000000000000000000000000000011110000000000000000000000000000000000011110000111111100000000000","000000000000000000000000000000000000000000011111100000000000000000000000000000000000000000000000000000000000000000000000000000011111000000000000","000000000000000000000000000000000000000000011111100000000000000000000000000000000000000000000000000000000000000000000000000000001111000000000000","000000000000000000000000000000000000000000011110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010","000000000000000000000000000000000000000000111110000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000001000","000000000000000000000000000000000000000000111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000","000000000000000000000000000000000000000000111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000001100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"]};
+const NY = 'America/New_York';
+const PODS = [
+  {id:'nyc', name:'New York', tag:'GROWING POD', tz:NY, lon:-74.0, lat:40.7, work:[1,2,3,4,5], home:true, lab:[-22,-8,'end']},
+  {id:'lon', name:'London', tag:'HQ', tz:'Europe/London', lon:-0.13, lat:51.5, work:[1,2,3,4,5], lab:[14,-10,'start']},
+  {id:'lis', name:'Lisbon', tag:'US OVERLAP', tz:'Europe/Lisbon', lon:-9.14, lat:38.72, work:[1,2,3,4,5], lab:[-14,22,'end']},
+  {id:'tlv', name:'Tel Aviv', tag:'FOUNDING POD · SUN–THU', tz:'Asia/Jerusalem', lon:34.78, lat:32.08, work:[0,1,2,3,4], lab:[14,20,'start']},
+  {id:'syd', name:'Sydney', tag:'ISOLATED', tz:'Australia/Sydney', lon:151.21, lat:-33.87, work:[1,2,3,4,5], lab:[-16,6,'end']},
+];
+const byId = Object.fromEntries(PODS.map(p=>[p.id,p]));
+const WD = {Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+/* ---------- time-zone helpers ---------- */
+const fmtCache = {};
+function parts(t, tz){
+  const f = fmtCache[tz] || (fmtCache[tz] = new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',weekday:'short'}));
+  const o = {}; for (const p of f.formatToParts(new Date(t))) o[p.type]=p.value;
+  return {y:+o.year, m:+o.month, d:+o.day, h:+o.hour%24, mi:+o.minute, s:+o.second, wd:WD[o.weekday]};
+}
+function offsetMin(tz, t){ const p=parts(t,tz); return Math.round((Date.UTC(p.y,p.m-1,p.d,p.h,p.mi,p.s)-t)/60000); }
+function zoned(y,m,d,h,mi,tz){
+  const guess = Date.UTC(y,m-1,d,h,mi);
+  let t = guess - offsetMin(tz,guess)*60000;
+  const o2 = offsetMin(tz,t); t = guess - o2*60000; return t;
+}
+function clock(t, tz, withDay){
+  const p = parts(t,tz); const h12 = ((p.h+11)%12)+1;
+  const s = `${h12}:${String(p.mi).padStart(2,'0')} ${p.h<12?'AM':'PM'}`;
+  return withDay ? `${DAYS[p.wd].slice(0,3)} ${s}` : s;
+}
+const H = 3600000;
+
+/* shifts (UTC ms) for a pod that intersect [ws,we) */
+function shifts(pod, ws, we){
+  const p = parts(ws, pod.tz), out=[];
+  for (let k=-2;k<=2;k++){
+    const wd = new Date(Date.UTC(p.y,p.m-1,p.d+k)).getUTCDay();
+    if (!pod.work.includes(wd)) continue;
+    const s = zoned(p.y,p.m,p.d+k,9,0,pod.tz), e = zoned(p.y,p.m,p.d+k,18,0,pod.tz);
+    const a = Math.max(s,ws), b = Math.min(e,we);
+    if (b>a) out.push([a,b]);
+  }
+  return out;
+}
+function intersect(A,B){ const out=[]; for(const [a,b] of A) for(const [c,d] of B){const s=Math.max(a,c),e=Math.min(b,d); if(e>s) out.push([s,e]);} return out; }
+const dur = L => L.reduce((n,[a,b])=>n+(b-a),0);
+function nextOnline(pod, t){
+  const p = parts(t,pod.tz);
+  for (let k=0;k<9;k++){
+    const wd = new Date(Date.UTC(p.y,p.m-1,p.d+k)).getUTCDay();
+    if (!pod.work.includes(wd)) continue;
+    const s = zoned(p.y,p.m,p.d+k,9,0,pod.tz);
+    if (s>t) return s;
+  }
+}
+function status(pod, t){
+  const p = parts(t,pod.tz), work = pod.work.includes(p.wd), hr = p.h+p.mi/60;
+  if (work && hr>=9 && hr<18) return {on:true, label:'ON SHIFT', note:`Closes ${clock(zoned(p.y,p.m,p.d,18,0,pod.tz),NY)} ET`};
+  const n = nextOnline(pod,t);
+  return {on:false, label: work ? 'OFF SHIFT' : 'WEEKEND', wk:!work, note:`Back ${clock(n,NY,true)} ET`};
+}
+
+/* ---------- state ---------- */
+let D;          // {y,m,d} selected ET date
+let WS, WE;     // window start/end
+let T;          // current instant
+const $ = id => document.getElementById(id);
+const slider = $('slider'), dateIn = $('date');
+
+function setDate(y,m,d){
+  D={y,m,d}; WS = zoned(y,m,d,0,0,NY); WE = zoned(y,m,d+1,0,0,NY);
+  slider.max = (WE-WS)/60000;
+  dateIn.value = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  buildBoard(); renderDay();
+}
+function setTime(t){ T = Math.min(Math.max(t,WS),WE-60000); slider.value = Math.round((T-WS)/60000); renderTick(); }
+
+/* ---------- map ---------- */
+const NS='http://www.w3.org/2000/svg';
+const X = lon => (lon+180)*4, Y = lat => (72.5-lat)*4+5;
+function el(tag, attrs, parent){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+const map = $('map');
+let dayClip, pinEls={}, pathG, ticketEl, sunEl;
+function buildMap(){
+  const defs = el('defs',{},map);
+  dayClip = el('clipPath',{id:'dayclip'},defs);
+  const night = el('g',{},map), day = el('g',{'clip-path':'url(#dayclip)'},map);
+  let dn='', dd='';
+  LAND.rows.forEach((r,i)=>{ for(let j=0;j<r.length;j++) if(r[j]==='1'){ const cx=j*10+5, cy=i*10+5; dn+=`M${cx-3.4},${cy}a3.4,3.4 0 1,0 6.8,0a3.4,3.4 0 1,0 -6.8,0`; } });
+  el('path',{d:dn,class:'dot-n'},night); el('path',{d:dn,class:'dot-d'},day);
+  sunEl = el('g',{},map);
+  el('circle',{r:13,fill:'var(--amber)'},sunEl);
+  el('circle',{r:20,fill:'none',stroke:'var(--amber)','stroke-width':2,'stroke-dasharray':'3 5'},sunEl);
+  pathG = el('g',{},map);
+  for (const p of PODS){
+    const g = el('g',{transform:`translate(${X(p.lon)},${Y(p.lat)})`},map);
+    const pulse = el('circle',{r:9,fill:'var(--green-on)',class:'pulse'},g);
+    const dot = el('circle',{r:p.home?10:8,stroke:'var(--ink)','stroke-width':2.5},g);
+    const [dx,dy,anc] = p.lab;
+    const t1 = el('text',{x:dx,y:dy,'text-anchor':anc,class:'pin-label'},g); t1.textContent=p.name;
+    const t2 = el('text',{x:dx,y:dy+17,'text-anchor':anc,class:'pin-time'},g);
+    pinEls[p.id]={pulse,dot,t2};
+  }
+  ticketEl = el('g',{visibility:'hidden'},map);
+  el('rect',{x:-9,y:-9,width:18,height:18,transform:'rotate(45)',fill:'var(--amber)',stroke:'var(--ink)','stroke-width':2.5},ticketEl);
+}
+function renderMap(){
+  const uh = ((T/H)%24+24)%24; let s = (12-uh)*15; s = ((s+180)%360+360)%360-180;
+  const a = X(s-90), b = X(s+90);
+  dayClip.innerHTML='';
+  const rect=(x,w)=>el('rect',{x,y:0,width:w,height:600},dayClip);
+  if (a<0){ rect(0,b); rect(1440+a,-a); } else if (b>1440){ rect(a,1440-a); rect(0,b-1440); } else rect(a,b-a);
+  sunEl.setAttribute('transform',`translate(${X(s)},${Y(23.44*Math.sin((dayOfYear()-81)/365*2*Math.PI))})`);
+  for (const p of PODS){
+    const st = status(p,T), e = pinEls[p.id];
+    e.pulse.style.display = st.on?'':'none';
+    e.dot.setAttribute('fill', st.on?'var(--green-on)':'var(--land-night)');
+    e.t2.textContent = clock(T,p.tz,true);
+  }
+}
+function dayOfYear(){ const p=parts(T,'UTC'); return (Date.UTC(p.y,p.m-1,p.d)-Date.UTC(p.y,0,0))/864e5; }
+
+/* ---------- board ---------- */
+let rowEls={};
+function buildBoard(){
+  const b = $('board'); b.innerHTML='';
+  const head = document.createElement('div'); head.className='row head';
+  const hrs = (WE-WS)/H;
+  head.innerHTML = `<div>POD</div><div>LOCAL</div><div>STATUS</div><div class="ticks">${[0,6,12,18,hrs].map(h=>`<span style="left:${h/hrs*100}%">${h===0||h===hrs?'12A':h===12?'12P':h<12?h+'A':(h-12)+'P'}${h===0?' ET':''}</span>`).join('')}</div>`;
+  b.appendChild(head);
+  const nyc = shifts(byId.nyc,WS,WE);
+  for (const p of PODS){
+    const r = document.createElement('div'); r.className='row';
+    const sh = shifts(p,WS,WE), ov = p.home?[]:intersect(sh,nyc);
+    const pct = t => ((t-WS)/(WE-WS)*100).toFixed(3)+'%';
+    const segs = sh.map(([a,c])=>`<div class="seg${p.home?' home':''}" style="left:${pct(a)};width:calc(${pct(c)} - ${pct(a)})"></div>`).join('')
+      + ov.map(([a,c])=>`<div class="ov" style="left:${pct(a)};width:calc(${pct(c)} - ${pct(a)})"></div>`).join('');
+    r.innerHTML = `<div class="pod">${p.name}<small>${p.tag}</small></div>
+      <div class="ltime"><span></span><small></small></div>
+      <div class="status"><span class="pill"></span><small></small></div>
+      <div class="trackcell"><div class="track">${segs}<div class="cursor"></div></div></div>`;
+    b.appendChild(r);
+    rowEls[p.id] = {time:r.querySelector('.ltime span'), day:r.querySelector('.ltime small'), pill:r.querySelector('.pill'), note:r.querySelector('.status small'), cur:r.querySelector('.cursor')};
+  }
+}
+function renderBoard(){
+  const pct = ((T-WS)/(WE-WS)*100)+'%';
+  for (const p of PODS){
+    const e = rowEls[p.id], st = status(p,T), lp = parts(T,p.tz);
+    e.time.textContent = clock(T,p.tz); e.day.textContent = DAYS[lp.wd].toUpperCase();
+    e.pill.textContent = st.label; e.pill.className = 'pill'+(st.on?' on':'')+(st.wk?' wk':'');
+    e.note.textContent = st.note; e.cur.style.left = pct;
+  }
+}
+
+/* ---------- day stats + notes ---------- */
+const hfmt = ms => { const h=ms/H; return Number.isInteger(h)?String(h):h.toFixed(1); };
+const span = L => L.length ? L.map(([a,b])=>`${clock(a,NY)}–${clock(b,NY)}`).join(', ')+' ET' : 'No live overlap';
+function renderDay(){
+  const nyc = shifts(byId.nyc,WS,WE), wd = new Date(Date.UTC(D.y,D.m-1,D.d)).getUTCDay();
+  $('daylabel').textContent = `Live overlap with the New York pod on ${DAYS[wd]}.`;
+  const stats = $('stats'); stats.innerHTML=''; const notes=[]; let best=null;
+  for (const p of PODS){ if(p.home) continue;
+    const ov = intersect(shifts(p,WS,WE),nyc), ms = dur(ov);
+    if (!best || ms>best.ms) best={p,ms};
+    stats.insertAdjacentHTML('beforeend',`<div class="stat" data-id="${p.id}"><div class="k">NYC ↔ ${p.name}</div><div class="v">${hfmt(ms)}<small>hr${ms===H?'':'s'}</small></div><div class="d">${nyc.length?span(ov):'NYC is off today'}</div></div>`);
+  }
+  // coverage
+  const all=[]; PODS.forEach(p=>all.push(...shifts(p,WS,WE))); all.sort((a,b)=>a[0]-b[0]);
+  const merged=[]; for(const s of all){ const l=merged[merged.length-1]; if(l&&s[0]<=l[1]) l[1]=Math.max(l[1],s[1]); else merged.push([...s]); }
+  const cov = dur(merged), total = WE-WS, gaps=[]; let c=WS;
+  for (const [a,b] of merged){ if(a>c) gaps.push([c,a]); c=Math.max(c,b); } if (c<WE) gaps.push([c,WE]);
+  stats.insertAdjacentHTML('beforeend',`<div class="stat hl"><div class="k">Coverage today</div><div class="v">${hfmt(cov)}<small>/ ${hfmt(total)} hrs</small></div><div class="d">${gaps.length?'Gaps: '+span(gaps):'Someone is always on shift'}</div></div>`);
+  if (best && best.p) $('stats').querySelector(`[data-id="${best.p.id}"]`)?.classList.add('hl');
+
+  if (nyc.length){
+    const syd = dur(intersect(shifts(byId.syd,WS,WE),nyc));
+    const opens = nextOnline(byId.syd, zoned(D.y,D.m,D.d,12,0,NY));
+    if (syd===0) notes.push(`No live overlap with Sydney today. Sydney opens at ${clock(opens,NY,true)} ET, after New York has closed, so every handoff with Australia has to be written, not spoken. The note has to be good enough to act on cold.`);
+    else notes.push(`Only ${hfmt(syd)} hr of live overlap with Sydney today. That's the most valuable hour on the calendar for anything Australian.`);
+    if (best.ms) notes.push(`The widest window is with ${best.p.name}: ${hfmt(best.ms)} hours. That's where live, on-a-Zoom-together escalations happen.`);
+  }
+  if (wd===5) notes.push(`Friday: Tel Aviv is already into its weekend (Fri–Sat). Anything New York needs from the Israel pod on a Friday waits until Sunday, when New York is off.`);
+  if (wd===0) notes.push(`Sunday: Tel Aviv is the only pod working. Whatever it hands off sits until Sydney opens on Monday morning, which is Sunday evening in New York.`);
+  if (wd===6) notes.push(`Saturday: no pod is on shift anywhere. Monday-morning Sydney is the first set of eyes, unless Tel Aviv gets there first on Sunday.`);
+  if (gaps.length && wd>=1 && wd<=5) notes.push(`${hfmt(dur(gaps))} hrs today with nobody on shift. P1s that land there are the ones that need a clear owner and a clear handoff.`);
+  $('notes').innerHTML = notes.map(n=>`<li>${n}</li>`).join('');
+}
+
+/* ---------- relay ---------- */
+const STEPS = [
+  {pod:'syd', off:0, h:16, m:30, t:'Ticket opens, scope confirmed', b:'Every Okta user is affected, not just APAC. The pod grabs a SAML trace (signature validation failing) and marks it P1.', h2:'"Signature check failing on every login. Possible cert change on their IdP side. Needs a repro."'},
+  {pod:'tlv', off:0, h:10, m:0, t:'Reproduced, root cause found', b:'In a test tenant, the certificate stored in Bob doesn\'t match the one in the customer\'s current IdP metadata. Engineering confirms there\'s no platform incident.', h2:'"Customer rotated their signing cert. Admin needs to re-upload metadata. Fix steps attached."'},
+  {pod:'lis', off:0, h:10, m:0, t:'Fix written up, gap flagged', b:'Turns the fix into plain steps the customer\'s admin can follow, and flags that the Help Center has no article on certificate rotation.', h2:'"Steps ready. EMEA admin is online this afternoon. Book a Zoom."'},
+  {pod:'lon', off:0, h:13, m:0, t:'Live fix with the customer', b:'On Zoom with the customer\'s EMEA IT admin. New metadata uploaded, and a test login works for European employees.', h2:'"Fixed for EMEA. US and APAC still need confirming. NYC owns the account."'},
+  {pod:'nyc', off:0, h:9, m:15, t:'Premium owner takes the wheel', b:'The dedicated point of contact confirms US logins, sends a short update to the customer\'s HR lead, and starts drafting the Help Center article.', h2:null},
+  {pod:'nyc', off:0, h:16, m:30, t:'Close the loop for every pod', b:'Root-cause note posted where all five pods will see it. Article published: "Rotating your SSO certificate without locking anyone out."', h2:'"Sydney: please confirm with APAC users at open, then solve."'},
+  {pod:'syd', off:1, h:9, m:5, t:'Solved', b:'APAC employees confirm they can log in. One P1, five pods, one day on New York\'s clock, and no dropped handoffs.', h2:null},
+];
+let relayTimer=null, active=-1;
+function relayDate(){ const wd = new Date(Date.UTC(D.y,D.m-1,D.d)).getUTCDay(); const k = 2-wd; const dt = new Date(Date.UTC(D.y,D.m-1,D.d+k)); return {y:dt.getUTCFullYear(), m:dt.getUTCMonth()+1, d:dt.getUTCDate()}; }
+function stepTimes(){
+  const r = relayDate();
+  return STEPS.map(s=>{ const p=byId[s.pod]; const base = zoned(r.y,r.m,r.d,0,30,NY); const lp = parts(base,p.tz);
+    // pod-local date at 12:30 AM ET Tuesday (all pods are ahead of NY), then offset
+    return zoned(lp.y,lp.m,lp.d+s.off,s.h,s.m,p.tz); });
+}
+function buildSteps(){
+  const ol = $('steps'); ol.innerHTML='';
+  STEPS.forEach((s,i)=>{
+    const li = document.createElement('li'); li.className='step'; li.dataset.i=i;
+    li.innerHTML = `<div class="w"><b>${byId[s.pod].name}</b><span class="lt"></span></div><div><h4>${s.t}</h4><p>${s.b}</p>${s.h2?`<div class="handoff">HANDOFF → ${s.h2}</div>`:''}</div>`;
+    li.onclick = ()=>{ stopAll(); goStep(i); };
+    ol.appendChild(li);
+  });
+}
+function goStep(i){
+  const r = relayDate(); if (r.y!==D.y||r.m!==D.m||r.d!==D.d) setDate(r.y,r.m,r.d);
+  const times = stepTimes(); active=i;
+  tween(times[i]);
+  document.querySelectorAll('#fts .step').forEach((el,j)=>{ el.classList.toggle('active',j===i); el.classList.toggle('past',j<i); });
+  // path
+  pathG.innerHTML='';
+  for (let j=1;j<=i;j++){ const a=byId[STEPS[j-1].pod], b=byId[STEPS[j].pod]; if(a===b) continue;
+    const x1=X(a.lon),y1=Y(a.lat),x2=X(b.lon),y2=Y(b.lat), mx=(x1+x2)/2, my=Math.min(y1,y2)-Math.abs(x2-x1)*.18-20;
+    el('path',{d:`M${x1},${y1} Q${mx},${my} ${x2},${y2}`,fill:'none',stroke:'var(--amber)','stroke-width':3,'stroke-dasharray':'2 7','stroke-linecap':'round'},pathG); }
+  const p = byId[STEPS[i].pod]; const S=STEPS[i]; const cap=$('caption'); cap.className='caption show'; cap.innerHTML=`<span class="cn">${i+1}/${STEPS.length}</span><div><b>${p.name}</b> · ${S.t}. ${S.b}</div>`; ticketEl.setAttribute('visibility','visible'); ticketEl.setAttribute('transform',`translate(${X(p.lon)},${Y(p.lat)-26})`);
+}
+function refreshStepTimes(){ const times=stepTimes(); document.querySelectorAll('#fts .step .lt').forEach((e,i)=>{ const s=STEPS[i]; e.textContent=`${clock(times[i],byId[s.pod].tz,true)} local · ${clock(times[i],NY)} ET`; }); }
+let tw=null;
+function tween(target){
+  cancelAnimationFrame(tw); const from=T, t0=performance.now(), dms=700;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return setTime(target);
+  const f = now => { const k=Math.min(1,(now-t0)/dms), e=1-Math.pow(1-k,3); setTime(from+(target-from)*e); if(k<1) tw=requestAnimationFrame(f); };
+  tw=requestAnimationFrame(f);
+}
+function runRelay(){
+  stopAll(); let i=0; document.querySelector('#fts .mapcard').scrollIntoView({behavior:'smooth',block:'start'}); goStep(0); $('runRelay').textContent='Stop';
+  relayTimer=setInterval(()=>{ i++; if(i>=STEPS.length){ stopAll(); return; } goStep(i); },3200);
+}
+
+/* ---------- play / now ---------- */
+let playTimer=null;
+function stopAll(){ clearInterval(relayTimer); relayTimer=null; $('runRelay').textContent='Run the relay'; clearInterval(playTimer); playTimer=null; $('play').textContent='Play'; }
+$('play').onclick=()=>{ if(playTimer){ stopAll(); return; } stopAll(); $('play').textContent='Pause';
+  playTimer=setInterval(()=>{ let t=T+15*60000; if(t>=WE) t=WS; setTime(t); },90); };
+$('now').onclick=()=>{ stopAll(); goNow(); };
+$('runRelay').onclick=()=>{ relayTimer?stopAll():runRelay(); };
+slider.oninput=()=>{ stopAll(); setTime(WS+slider.value*60000); };
+dateIn.onchange=()=>{ const [y,m,d]=dateIn.value.split('-').map(Number); if(!y) return; const off=T-WS; stopAll(); setDate(y,m,d); setTime(WS+off); clearPath(); refreshStepTimes(); };
+function clearPath(){ $('caption').className='caption'; pathG.innerHTML=''; ticketEl.setAttribute('visibility','hidden'); active=-1; document.querySelectorAll('#fts .step').forEach(e=>e.classList.remove('active','past')); }
+function goNow(){ const n=Date.now(), p=parts(n,NY); setDate(p.y,p.m,p.d); setTime(n); clearPath(); refreshStepTimes(); }
+
+function renderTick(){
+  const p = parts(T,NY);
+  $('clock').innerHTML = `${clock(T,NY)}<small>NEW YORK · ${DAYS[p.wd].toUpperCase()}</small>`;
+  renderMap(); renderBoard();
+}
+
+buildMap(); buildSteps(); goNow();
+})();
+</script>
+
+  <section class="more">
+    <div class="wrap">
+      <h2>More from the dugout</h2>
+      <p class="sub">A few other things I've built.</p>
+      <div class="tiles">
+        <a class="tile" href="/box-score/"><span class="tag">Support Ops</span><h3>Box Score</h3><p>The support work, by the numbers.</p><span class="go">See it →</span></a>
+        <a class="tile" href="/portfolio/"><span class="tag">Portfolio</span><h3>The full lineup</h3><p>Software, support and baseball projects.</p><span class="go">Browse →</span></a>
+        <a class="tile" href="/about/"><span class="tag">About</span><h3>Who's Matt?</h3><p>Background and what I'm up to next.</p><span class="go">Read →</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-name">Let's make<br>work <em>work.</em></div>
+      <div class="foot-links">
+        <a href="mailto:mscottjones24@gmail.com">mscottjones24@gmail.com</a>
+        <a href="https://linkedin.com/in/mattjoneshtx">linkedin.com/in/mattjoneshtx</a>
+        <a href="/calendar/">Book a time →</a>
+      </div>
+    </div>
+    <div class="copyright">© Matt Jones, 2026. Not affiliated with HiBob; built as an independent project.</div>
+  </div>
+</footer>
+</body></html>
